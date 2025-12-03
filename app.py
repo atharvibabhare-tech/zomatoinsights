@@ -13,8 +13,8 @@ df = pd.read_csv("Zomato_Live.csv")
 locations = sorted(df.location.dropna().unique())
 h = st.selectbox("Select Location:", locations)
 
-# Dropdown for Top N values
-top_n = st.slider("Select Top N Restaurants", min_val=5, max_val=20, value=10)
+# Correct slider (fix: min_value, max_value)
+top_n = st.slider("Select Top N Restaurants", min_value=5, max_value=20, value=10)
 
 # Filter data
 lo = df[df.location == h]
@@ -34,6 +34,6 @@ plt.xlabel("Restaurants")
 
 st.pyplot(fig)
 
-# Optional: Show data table
+# Optional: show raw data
 if st.checkbox("Show Raw Data for Selected Location"):
     st.dataframe(lo)
