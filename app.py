@@ -7,7 +7,7 @@ import seaborn as sb
 st.title("Zomato – Top 10 Costliest Restaurants by Location")
 
 # Load dataset
-df = pd.read_csv("../Datasets/zomato.csv")
+df = pd.read_csv("Zomato_Live.csv")
 
 # Show locations
 locations = sorted(df.location.unique())
