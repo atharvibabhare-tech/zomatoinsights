@@ -9,7 +9,7 @@ st.set_page_config(page_title="Zomato Cost Analyzer", layout="wide")
 st.title("🍽️ Zomato Dataset — Cost Analysis Dashboard")
 
 # Load dataset
-df = pd.read_csv("../Datasets/zomato.csv")
+df = pd.read_csv("Zomato_Live.csv")
 
 # Clean dataset
 df = df.drop(['url','address','votes','phone','dish_liked','reviews_list',
