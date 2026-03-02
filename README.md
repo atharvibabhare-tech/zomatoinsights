@@ -88,3 +88,5 @@ zomato-live-data-analysis/
 │
 └── README.md
     → Project documentation
+## 🌐 Live Demo
+[Click Here to View Live App](https://zomatoinsights-dwfj3k5k6kahx99bvkzcyk.streamlit.app/)
