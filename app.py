@@ -485,12 +485,15 @@ with col_right:
                          c=scatter_df["approx_cost"], cmap="YlOrRd",
                          alpha=0.55, s=30, zorder=3, linewidths=0)
 
-        # Trend line
-        if len(scatter_df) > 5:
-            z = np.polyfit(scatter_df[rating_col], scatter_df["approx_cost"], 1)
-            p = np.poly1d(z)
-            xs = np.linspace(scatter_df[rating_col].min(), scatter_df[rating_col].max(), 100)
-            ax3.plot(xs, p(xs), color=GOLD, lw=2, linestyle="--", zorder=4, alpha=0.85)
+        # Trend line — guarded against degenerate/singular data
+        if len(scatter_df) > 5 and scatter_df[rating_col].nunique() > 1 and scatter_df["approx_cost"].nunique() > 1:
+            try:
+                z = np.polyfit(scatter_df[rating_col], scatter_df["approx_cost"], 1)
+                p = np.poly1d(z)
+                xs = np.linspace(scatter_df[rating_col].min(), scatter_df[rating_col].max(), 100)
+                ax3.plot(xs, p(xs), color=GOLD, lw=2, linestyle="--", zorder=4, alpha=0.85)
+            except (np.linalg.LinAlgError, Exception):
+                pass
 
         ax3.set_xlabel("Rating", labelpad=8)
         ax3.set_ylabel("Cost for Two (₹)", labelpad=8)
