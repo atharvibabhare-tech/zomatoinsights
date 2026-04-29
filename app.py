@@ -425,10 +425,14 @@ with col_left:
     data_clean = filtered_df["approx_cost"].dropna()
 
     ax2.hist(data_clean, bins=25, color=RED, alpha=0.75, zorder=3, edgecolor=BG)
-    from scipy.stats import gaussian_kde
     try:
+        # Manual Gaussian KDE using numpy only
         kde_x = np.linspace(data_clean.min(), data_clean.max(), 300)
-        kde_y = gaussian_kde(data_clean)(kde_x)
+        bw = 1.06 * data_clean.std() * len(data_clean) ** -0.2
+        kde_y = np.array([
+            np.mean(np.exp(-0.5 * ((kde_x[i] - data_clean.values) / bw) ** 2) / (bw * np.sqrt(2 * np.pi)))
+            for i in range(len(kde_x))
+        ])
         kde_y_scaled = kde_y * len(data_clean) * (data_clean.max() - data_clean.min()) / 25
         ax2.plot(kde_x, kde_y_scaled, color=GOLD, lw=2.5, zorder=4)
     except Exception:
